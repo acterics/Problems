@@ -10,8 +10,7 @@ int main()
 {
 	Expression ex(DEFAULT_PATH);
 	ex.print();
-	
-	system("pause");
+	std::cout << "RESULT = " << ex.calculateExpression() << std::endl;
     return 0;
 }
 

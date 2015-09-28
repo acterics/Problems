@@ -76,12 +76,32 @@ Expression::Expression(std::string filePath)
 	getline(inputStream, inputString);
 	this->parseString(inputString);
 	
-
 }
 
 
 Expression::~Expression()
 {
+}
+
+std::string Expression::calculateExpression()
+{
+	std::stack<std::string> tempStack;
+	std::string firstOperand, secondOperand;
+	for (int i = 0;i < this->size();i++)
+	{
+
+		if (isOperator((*this)[i]))
+		{
+			firstOperand = tempStack.top();
+			tempStack.pop();
+			secondOperand = tempStack.top();
+			tempStack.pop();
+			tempStack.push(calculateBinaryOperation(secondOperand, firstOperand, (*this)[i]));
+		}
+		else
+			tempStack.push((*this)[i]);
+	}
+	return tempStack.top();
 }
 
 void Expression::clearExpressionFromSpaces(std::string &inputString)
@@ -124,8 +144,6 @@ std::string Expression::scanOperator(std::string inputString, int currentPositio
 	return "";
 }
 
-
-
 int Expression::operatorPriority(std::string inputOperator)
 {
 	if (inputOperator == "+" || inputOperator == "-")
@@ -145,5 +163,51 @@ void Expression::print()
 	}
 	std::cout << std::endl;
 }
+
+bool Expression::isOperator(std::string inputExpression)
+{
+
+	if (inputExpression == "*") 
+		return true; 
+	if (inputExpression == "+")
+		return true;
+	if (inputExpression == "-")
+		return true;
+	if (inputExpression == "^")
+		return true;
+	return false;
+}
+
+std::string Expression::calculateBinaryOperation(std::string firstStringOperand, std::string secondStringOperand, std::string inputOperator)
+{
+	int   firstNumericalOperand = stringToNumber(firstStringOperand),
+		secondNumericalOperand = stringToNumber(secondStringOperand),
+		operationResult = 0;
+	if (inputOperator == "+")
+		operationResult = firstNumericalOperand + secondNumericalOperand;
+	if (inputOperator == "-")
+		operationResult = firstNumericalOperand - secondNumericalOperand;
+	if (inputOperator == "*")
+		operationResult = (firstNumericalOperand*secondNumericalOperand);
+	if (inputOperator == "^")
+		operationResult = pow(firstNumericalOperand, secondNumericalOperand);
+	return numberToString(operationResult);
+}
+
+int Expression::stringToNumber(std::string inputString)
+{
+	int resultNumber;
+	std::istringstream convertingStream(inputString);
+	convertingStream >> resultNumber;
+	return resultNumber;
+}
+
+std::string Expression::numberToString(int inputNumber)
+{
+	std::stringstream convertingStream;
+	convertingStream << inputNumber;
+	return convertingStream.str();
+}
+
 
 
