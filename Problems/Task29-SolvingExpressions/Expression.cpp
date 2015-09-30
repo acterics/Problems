@@ -9,7 +9,7 @@ void Expression::parseString(std::string inputString)
 	std::stack<std::string> tempStack;
 	clearExpressionFromSpaces(inputString);
 
-	for (int iterator = 0; iterator < inputString.length();)
+	for (unsigned int iterator = 0; iterator < inputString.length();)
 	{
 		if (isSymbol(inputString[iterator]))
 		{
@@ -50,7 +50,7 @@ void Expression::parseString(std::string inputString)
 		{
 			while (!tempStack.empty())
 			{
-				if (operatorPriority(scanOperator(inputString, iterator)) < operatorPriority(tempStack.top()))
+				if (operatorPriority(scanOperator(inputString, iterator)) <= operatorPriority(tempStack.top()))
 				{
 					this->push_back(tempStack.top());
 					tempStack.pop();
@@ -75,6 +75,7 @@ Expression::Expression(std::string filePath)
 	std::ifstream inputStream(filePath, std::ios::in);
 	getline(inputStream, inputString);
 	this->parseString(inputString);
+	inputStream.close();
 	
 }
 
@@ -87,19 +88,19 @@ std::string Expression::calculateExpression()
 {
 	std::stack<std::string> tempStack;
 	std::string firstOperand, secondOperand;
-	for (int i = 0;i < this->size();i++)
+	for (unsigned int iterator = 0;iterator < this->size();iterator++)
 	{
 
-		if (isOperator((*this)[i]))
+		if (isOperator((*this)[iterator]))
 		{
 			firstOperand = tempStack.top();
 			tempStack.pop();
 			secondOperand = tempStack.top();
 			tempStack.pop();
-			tempStack.push(calculateBinaryOperation(secondOperand, firstOperand, (*this)[i]));
+			tempStack.push(calculateBinaryOperation(secondOperand, firstOperand, (*this)[iterator]));
 		}
 		else
-			tempStack.push((*this)[i]);
+			tempStack.push((*this)[iterator]);
 	}
 	return tempStack.top();
 }
