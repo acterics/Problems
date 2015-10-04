@@ -77,9 +77,15 @@ CubicSpline::CubicSpline(std::string filePath)
 	getline(inputStream, inputArguments);
 	getline(inputStream, inputResults);
 	inputStream.close();
-	for (unsigned int argumentIterator = 0, splineIterator = 0; argumentIterator < inputArguments.length(); argumentIterator++)
+	for (unsigned int argumentIterator = 0, splineIterator = 0; argumentIterator < inputArguments.length();)
 	{
-		if (inputArguments[argumentIterator] == ' ' || argumentIterator == inputArguments.length() - 1)
+		if (argumentIterator == inputArguments.length() - 1)
+		{
+			splines_.push_back(emptySpline());
+			splines_[splineIterator].argumentValue = stringToNumber(inputArguments);
+			splineIterator++;
+		}	
+		if (inputArguments[argumentIterator] == ' ')
 		{
 			splines_.push_back(emptySpline());
 			splines_[splineIterator].argumentValue = stringToNumber(inputArguments.substr(0, argumentIterator));
@@ -87,16 +93,26 @@ CubicSpline::CubicSpline(std::string filePath)
 			inputArguments = inputArguments.substr(argumentIterator + 1);
 			argumentIterator = 0;
 		}
+		else
+			argumentIterator++;
 	}
-	for (unsigned int resultIterator = 0, splineIterator = 0; resultIterator < inputResults.length(); resultIterator++)
+	for (unsigned int resultIterator = 0, splineIterator = 0; resultIterator < inputResults.length();)
 	{
-		if (inputResults[resultIterator] == ' ' || resultIterator == inputResults.length() - 1)
+		if (resultIterator == inputResults.length() - 1)
+		{
+			splines_[splineIterator].freeMember = stringToNumber(inputResults);
+			splineIterator++;
+		}
+			
+		if (inputResults[resultIterator] == ' ')
 		{
 			splines_[splineIterator].freeMember = stringToNumber(inputResults.substr(0, resultIterator));
 			splineIterator++;
 			inputResults = inputResults.substr(resultIterator + 1);
 			resultIterator = 0;
 		}
+		else
+			resultIterator++;
 	}
 	splines_[0].secondFactor = 0;
 

@@ -3,7 +3,6 @@
 
 
 
-
 int Solution::stringToInteger(std::string inputString)
 {
 	int resultNumber;

@@ -82,15 +82,26 @@ void DiophantineEquation::printResult()
 		std::cout << "EQUATION HAS NOT SOLUTION" << std::endl;
 		return;
 	}
+	bool zeroGeneralSolution = false;
 	for (unsigned int outerIterator = 0; outerIterator < variablesAmount_; outerIterator++)
 	{
-		std::cout << "x" << outerIterator + 1 << " = " << resultVector_[outerIterator];
+		std::cout << "x" << outerIterator + 1 << " = ";
+		if (resultVector_[outerIterator] == 0)
+			zeroGeneralSolution = true;
+		else
+		{
+			std::cout << resultVector_[outerIterator];
+			zeroGeneralSolution = false;
+		}
 		for (unsigned int innerIterator = 1; innerIterator < variablesAmount_; innerIterator++)
 		{
 			if (factorSets_[innerIterator][outerIterator] != 0)
 			{
-				std::cout << " + ";
-				std::cout << factorSets_[innerIterator][outerIterator] << " * t" << innerIterator;
+				if(!zeroGeneralSolution)
+					std::cout << " + ";
+				if(factorSets_[innerIterator][outerIterator] != 1)
+					std::cout << factorSets_[innerIterator][outerIterator] << " * ";
+				std::cout << "t" << innerIterator;
 			}
 		}
 		std::cout << ";" << std::endl;

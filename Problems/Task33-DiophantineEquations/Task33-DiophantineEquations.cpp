@@ -6,7 +6,7 @@
 
 int main()
 {
-	DiophantineEquation de({ 18, 42, 10 }, 13);
+	DiophantineEquation de({ 6, 24, 322 }, 1234);
 	de.solveEquation();
 	de.printResult();
     return 0;
