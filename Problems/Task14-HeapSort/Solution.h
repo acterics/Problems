@@ -10,8 +10,12 @@ private:
 	Type* itemArray_;
 	unsigned int arraySize_;
 	bool(*compareFunction)(Type firstComparedItem, Type secondComparedItem);
-	void convertArray(unsigned int arraySize, int limitValue);
+	void heapify(unsigned int arraySize, int currentPosition);
+	void buildHeap();
 	void fillArray(Type(* getRandomItem)(void));
+	int leftSonPosition(int position);
+	int rightSonPosition(int position);
+	void swap(int firstItemPosition, int secondItemPosition);
 public:
 	void heapSort();
 	Solution(Type* itemArray, unsigned int arraySize, bool (* compare)(Type firstComparedItem, Type secondCompared));

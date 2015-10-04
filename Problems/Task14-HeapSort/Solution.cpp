@@ -5,70 +5,30 @@
 
 
 template<typename Type>
-void Solution<Type>::convertArray(unsigned int arraySize, int limitValue)
+void Solution<Type>::heapify(unsigned int arraySize, int currentPosition)
 {
-	//int T = itemArray_[arraySize - 1];
+	int leftSon= leftSonPosition(currentPosition);
+	int rightSon = rightSonPosition(currentPosition);
+	int comparedItemPosition = currentPosition;
+	if (leftSon < arraySize && !compareFunction(itemArray_[currentPosition], itemArray_[leftSon]))
+		comparedItemPosition = leftSon;
 
-	//while (arraySize <= limitValue / 2) {
+	if (rightSon < arraySize && !compareFunction(itemArray_[comparedItemPosition], itemArray_[rightSon]))
+		comparedItemPosition = rightSon;
 
-	//	int j = arraySize + arraySize;
-
-	//	if ((j < limitValue) && (itemArray_[j - 1] < itemArray_[j])) j++;
-
-	//	if (T >= itemArray_[j - 1]) {
-
-	//		break;
-
-	//	}
-	//	else { 	
-
-	//		itemArray_[arraySize - 1] = itemArray_[j - 1];
-	//		arraySize = j;
-	//	}
-	//}
-
-	//itemArray_[arraySize - 1] = T;
-
-
-
-
-
-
-
-
-	if (arraySize == 1)
-		return;
-	int indexOfCorrectItem;
-	Type tempItem;
-	for (int outerIterator = limitValue; outerIterator >= 0; outerIterator--)
+	if (currentPosition != comparedItemPosition)
 	{
-		unsigned int innerIterator = outerIterator;
-		while (innerIterator * 2 + 1 > arraySize)
-		{
-			if (innerIterator * 2 + 1 == arraySize - 1)
-				indexOfCorrectItem = innerIterator * 2 + 1;
-			else if (compareFunction(itemArray_[innerIterator * 2 + 1], itemArray_[innerIterator * 2 + 2]))
-				indexOfCorrectItem = innerIterator * 2 + 1;
-			else
-				indexOfCorrectItem = innerIterator * 2 + 2;
-
-			if (!compareFunction(itemArray_[innerIterator], itemArray_[indexOfCorrectItem]))
-			{
-				tempItem = itemArray_[innerIterator];
-				itemArray_[innerIterator] = itemArray_[indexOfCorrectItem];
-				itemArray_[indexOfCorrectItem] = tempItem;
-				innerIterator = indexOfCorrectItem;
-			}
-			else
-				break;
-		}
+		swap(currentPosition, comparedItemPosition);
+		heapify(arraySize, comparedItemPosition);
 	}
-	tempItem = itemArray_[limitValue];
-	itemArray_[limitValue] = itemArray_[arraySize - 1];
-	itemArray_[arraySize - 1] = tempItem;
-	convertArray(arraySize - 1, 1);
+}
 
-
+template<typename Type>
+void Solution<Type>::buildHeap()
+{
+	for (int iterator = arraySize_ / 2; iterator >= 0; iterator--) 
+		heapify(arraySize_, iterator);
+	
 }
 
 template<typename Type>
@@ -79,23 +39,36 @@ void Solution<Type>::fillArray(Type (* getRandomItem)(void))
 }
 
 template<typename Type>
+int Solution<Type>::leftSonPosition(int position)
+{
+	return position * 2 + 2;
+}
+
+template<typename Type>
+int Solution<Type>::rightSonPosition(int position)
+{
+	return position * 2 + 1;
+}
+
+template<typename Type>
+void Solution<Type>::swap(int firstItemPosition, int secondItemPosition)
+{
+	Type tempItem = itemArray_[firstItemPosition];
+	itemArray_[firstItemPosition] = itemArray_[secondItemPosition];
+	itemArray_[secondItemPosition] = tempItem;
+}
+
+template<typename Type>
 void Solution<Type>::heapSort()
 {
-	int N = arraySize_;
-	for (int k = N / 2; k > 0; k--) convertArray(k, N);
-
-	do {
-
-		int T = itemArray_[0];
-		itemArray_[0] = itemArray_[N - 1];
-		itemArray_[N - 1] = T;
-
-		N--;
-		convertArray(1, N);
-
-	} while (N > 1);
-
-	//convertArray(arraySize_, arraySize_ / 2);
+	buildHeap();
+	int heapSize = arraySize_;
+	while (heapSize > 1) 
+	{
+		swap(0, heapSize - 1);
+		heapSize--;
+		heapify(heapSize, 0);
+	}
 }
 
 template<typename Type>
