@@ -3,21 +3,15 @@
 
 #include "stdafx.h"
 #include "Solution.h"
-#include <iostream>
 
 
 using namespace std;
 int main()
 {
-	List<int> *list = new List<int>();
-	for (int i = 0; i < 200; i++)
-	{
-		list->pushBack(i);
-	}
 
-	Solution task(list, 30);
-
-
+	Solution task(67, 20);
+	task.solve();
+	task.printResult();
 	//list->pushFront(&tempInt);
 
     return 0;

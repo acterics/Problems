@@ -2,7 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "ListDll.h"
+#include "List.h"
+
+
 
 namespace List
 {
@@ -128,13 +130,15 @@ namespace List
 	void List<Type>::pushBack(Node * inputNode)
 	{
 		if (!head_)
-			head_ = inputNode;
+			head_ = tail_ =  inputNode;
 		else
 		{
 			tail_->setNext(inputNode);
 			tail_ = inputNode;
 		}
 	}
+
+
 
 	template<typename Type>
 	void List<Type>::pushAfter(unsigned int position, Type data)
