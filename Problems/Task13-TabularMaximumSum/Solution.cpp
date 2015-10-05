@@ -1,3 +1,4 @@
+#include "..\Task32-MutualSubstring\Solution.h"
 #include "stdafx.h"
 #include "Solution.h"
 
@@ -88,6 +89,7 @@ void Solution::printTable()
 		std::cout << std::endl;
 	}
 }
+
 
 void Solution::printResult()
 {

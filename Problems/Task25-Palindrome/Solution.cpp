@@ -34,10 +34,10 @@ bool Solution::isPalindrome(std::string inputString)
 	return isPalindrome(inputString.substr(1, inputString.length() - 2));
 }
 
-std::string Solution::solve()
-{
-
-}
+//std::string Solution::solve()
+//{
+//
+//}
 
 Solution::Solution(std::string inputString)
 {
