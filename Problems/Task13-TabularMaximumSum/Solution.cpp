@@ -1,4 +1,3 @@
-#include "..\Task32-MutualSubstring\Solution.h"
 #include "stdafx.h"
 #include "Solution.h"
 

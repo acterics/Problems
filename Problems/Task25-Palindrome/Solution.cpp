@@ -20,7 +20,7 @@ std::string Solution::eraseForPalindrome(std::string inputString, int stepsAmoun
 	}	
 	for (unsigned int iterator = 0; iterator < inputString.size(); iterator++ )
 	{
-		if(isPalindrome(eraseForPalindrome((inputString.substr(0, iterator) + inputString.substr(iterator + 1)), stepsAmount + 1)));
+		//if(isPalindrome(eraseForPalindrome((inputString.substr(0, iterator) + inputString.substr(iterator + 1)), stepsAmount + 1)));
 
 	}
 }

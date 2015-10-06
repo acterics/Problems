@@ -6,8 +6,8 @@
 
 
 
-namespace List
-{
+namespace List {
+
 	template <typename Type>
 	List<Type>::Node::Node() :
 		next_(nullptr), data_(nullptr)
@@ -15,8 +15,8 @@ namespace List
 	}
 
 	template<typename Type>
-	List<Type>::Node::Node(Node * copiedNode) :
-		this(copiedNode)
+	List<Type>::Node::Node(Node * copiedNode):
+		data_(copiedNode->data()), next_(copiedNode->next())
 	{
 	}
 
